@@ -1,7 +1,7 @@
 {
-  "name": "react-news-ssr",
+  "name": "spacex-app",
   "version": "1.0.0",
-  "description": "Server side rendering project",
+  "description": "Space X application to demonstrate server side rendering",
   "engines": {
     "node": "10.14.2"
   },
