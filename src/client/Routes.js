@@ -1,6 +1,4 @@
 import HomePage from './pages/HomePage';
-//import NotFoundPage from './pages/NotFoundPage';
-//import ArticleListPage from './pages/ArticleListPage';
 import App from './App';
 
 export default [
@@ -11,13 +9,6 @@ export default [
         ...HomePage,
         path: '/',
         exact: true
-      // },
-      // {
-      //   path: '/articles/:id',
-      //   ...ArticleListPage
-      // },
-      // {
-      //   ...NotFoundPage
       }
     ]
   }

@@ -89,7 +89,7 @@ const HomePage = props => {
             <Col md={10} xs={12} className="p-0">
               <main>
               <div className="row">
-                <ul className="row characters-list p-0 m-0">
+                <ul className="row program-list p-0 m-0">
                   {renderFlights()}
                 </ul>
               </div>
