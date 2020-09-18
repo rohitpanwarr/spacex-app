@@ -9,6 +9,10 @@ export const fetchFlights = source => async dispatch => {
     url += '&launch_year=' + source.launch_year
   }
 
+  if (source && source.launch_success) {
+    url += '&launch_success=' + source.launch_success
+  }
+  
   const res = await axios.get(url);
 
   dispatch({

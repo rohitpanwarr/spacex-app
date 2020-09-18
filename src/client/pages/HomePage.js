@@ -9,26 +9,10 @@ import { fetchFlights } from '../actions';
 import Filters from '../components/Filters';
 
 const HomePage = props => {
-  const [currentFlight, setCurrentFlight] = useState({});
-
-  const readFlight = flight => {
-    setCurrentFlight(flight);
-  };
-
-  const hideFlightCard = (flight) => {
-    let isSelected = false;
-    if(props.filters.selectedYears.length == 0) isSelected = true;
-    props.filters.selectedYears.map(year => {
-      if (flight.launch_year == year) {
-        isSelected = true;
-      }
-    });
-    return isSelected ? '' : 'd-none'; 
-  };
 
   const renderFlights = () => {
     return props.flights.map(flight => (
-        <li key={flight.flight_number} className={hideFlightCard(flight)}>
+        <li key={flight.flight_number}>
           <div className="media">
             <article className="program">
               <div className="program__image">
@@ -103,8 +87,7 @@ const HomePage = props => {
 
 const mapStateToProps = state => {
   return {
-    flights: state.flights,
-    filters: state.filters
+    flights: state.flights
   };
 };
 

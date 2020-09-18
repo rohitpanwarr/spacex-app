@@ -42,7 +42,7 @@
     &__list {
         margin: 0;
         padding: 0;
-        .isSuccess {
+        li {
             display: inline-block;
             margin: 10px;
             button.active {

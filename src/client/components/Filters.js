@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { applyFilters, fetchFlights } from '../actions';
 
 const Filters = props => {
-    const [selectedYears, setSelectedYears] = useState([]);
     const years = [
         2006, 2007, 2008,
         2009, 2010, 2011,
@@ -13,6 +12,8 @@ const Filters = props => {
     let index = 0;
 
     const filterYear = (e, year) => {
+        const successBtn = document.querySelectorAll('.launch-success .success button.active'),
+            failureBtn = document.querySelectorAll('.launch-success .fail button.active');
         if (e.target.classList.contains('active')) {
             e.target.classList.remove("active");
             props.dispatch(fetchFlights({}));
@@ -21,9 +22,56 @@ const Filters = props => {
                 item.classList.remove('active');
             }
             e.target.classList.add("active");
-            props.dispatch(fetchFlights({
-                launch_year: year
-            }));
+
+            if (successBtn && successBtn.length) {
+                props.dispatch(fetchFlights({
+                    launch_year: year,
+                    launch_success: true
+                }));
+            } else if (failureBtn && failureBtn.length) { 
+                props.dispatch(fetchFlights({
+                    launch_year: year,
+                    launch_success: false
+                }));
+            } else {
+                props.dispatch(fetchFlights({
+                    launch_year: year
+                }));
+            }
+        }
+    };
+
+    const filterLaunch = (e, isSuccess) => {
+        const selectedYear = document.querySelector('.year button.active');
+
+        if (e.target.classList.contains('active')) {
+            e.target.classList.remove("active");
+
+            if (selectedYear) {
+                props.dispatch(fetchFlights({
+                    launch_year: selectedYear.textContent
+                }));
+            } else {
+                props.dispatch(fetchFlights({}));
+            }
+            
+        } else {
+
+            if (document.querySelector('.launch-success button.active')) {
+                document.querySelector('.launch-success button.active').classList.remove('active');
+            }
+            e.target.classList.add("active");
+
+            if (selectedYear) { 
+                props.dispatch(fetchFlights({
+                    launch_year: selectedYear.textContent,
+                    launch_success: isSuccess
+                }));
+            } else {
+                props.dispatch(fetchFlights({
+                    launch_success: isSuccess
+                }));
+            }
         }
     };
 
@@ -47,10 +95,10 @@ const Filters = props => {
             <div className="launch-success">
                 <label className="launch-success__title">Successful Launch</label>
                 <ul className="launch-success__list">
-                    <li key={1} className="isSuccess">
+                    <li key={1} className="success">
                         <button type="button" className="btn btn-primary" onClick={(e) =>filterLaunch(e, true)}>True</button>
                     </li>
-                    <li key={2} className="isSuccess">
+                    <li key={2} className="fail">
                         <button type="button" className="btn btn-primary" onClick={(e) =>filterLaunch(e, false)}>False</button>
                     </li>
                 </ul>
@@ -60,8 +108,7 @@ const Filters = props => {
 };
 
 const mapStateToProps = state => ({
-    flights: state.flights,
-    filters: state.filters
+    flights: state.flights
 });
 
 export default connect(mapStateToProps)(Filters);
